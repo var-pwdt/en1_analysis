@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         html, body, #map {
@@ -35,6 +36,7 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
         <script src="data/Rede_Rodoviaria_2.js"></script>
         <script src="data/DL000941_3.js"></script>
         <script src="data/PWDTlocationswithin1kmofEN1_4.js"></script>
@@ -42,7 +44,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[38.35487052451117,-10.973549444403714],[41.22348269675637,-5.470314567663784]]);
+        }).fitBounds([[37.51808168153571,-12.342421033052513],[41.677081883207954,-3.1731113809392237]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -302,20 +304,20 @@
                         <td class="visible-with-data" id="Longitude">' + (feature.properties['Longitude'] !== null ? autolinker.link(String(feature.properties['Longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Distrito</th>\
-                        <td class="visible-with-data" id="Distrito">' + (feature.properties['Distrito'] !== null ? autolinker.link(String(feature.properties['Distrito']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Admin_Dist</th>\
+                        <td class="visible-with-data" id="Admin_Dist">' + (feature.properties['Admin_Dist'] !== null ? autolinker.link(String(feature.properties['Admin_Dist']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Concelho</th>\
-                        <td class="visible-with-data" id="Concelho">' + (feature.properties['Concelho'] !== null ? autolinker.link(String(feature.properties['Concelho']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Admin_Conc</th>\
+                        <td class="visible-with-data" id="Admin_Conc">' + (feature.properties['Admin_Conc'] !== null ? autolinker.link(String(feature.properties['Admin_Conc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Freguesia</th>\
-                        <td class="visible-with-data" id="Freguesia">' + (feature.properties['Freguesia'] !== null ? autolinker.link(String(feature.properties['Freguesia']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Admin_Freg</th>\
+                        <td class="visible-with-data" id="Admin_Freg">' + (feature.properties['Admin_Freg'] !== null ? autolinker.link(String(feature.properties['Admin_Freg']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Location T</th>\
-                        <td class="visible-with-data" id="Location T">' + (feature.properties['Location T'] !== null ? autolinker.link(String(feature.properties['Location T']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">LocType</th>\
+                        <td class="visible-with-data" id="LocType">' + (feature.properties['LocType'] !== null ? autolinker.link(String(feature.properties['LocType']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Performanc</th>\
@@ -515,6 +517,13 @@
         });
         lay.addTo(map);
         setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_PWDTlocationswithin1kmofEN1_4,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'LocExtID'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
         </script>
     </body>
 </html>
