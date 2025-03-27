@@ -1,0 +1,1 @@
+var json_VibeHC_5 = {"type":"FeatureCollection","name":"VibeHC_5","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"latitude":41.0003,"longitude":-8.54345,"name":"Vibe HC"},"geometry":{"type":"Point","coordinates":[-8.54345022028085,41.000300316165102]}}]}
