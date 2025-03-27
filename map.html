@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Rede_Rodoviaria_2.js"></script>
+        <script src="data/intersection_1km_3.js"></script>
+        <script src="data/vibe_hc_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[36.933105238331756,-10.522492116690495],[41.64304475979399,-6.366504087128131]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_ESRIGraydark_0');
+        map.getPane('pane_ESRIGraydark_0').style.zIndex = 400;
+        var layer_ESRIGraydark_0 = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRIGraydark_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_ESRIGraydark_0;
+        map.addLayer(layer_ESRIGraydark_0);
+        map.createPane('pane_ESRIBoundariesPlaces_1');
+        map.getPane('pane_ESRIBoundariesPlaces_1').style.zIndex = 401;
+        var layer_ESRIBoundariesPlaces_1 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_ESRIBoundariesPlaces_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_ESRIBoundariesPlaces_1;
+        map.addLayer(layer_ESRIBoundariesPlaces_1);
+        function pop_Rede_Rodoviaria_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">roadnumber</th>\
+                        <td class="visible-with-data" id="roadnumber">' + (feature.properties['roadnumber'] !== null ? autolinker.link(String(feature.properties['roadnumber']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">categoria</th>\
+                        <td class="visible-with-data" id="categoria">' + (feature.properties['categoria'] !== null ? autolinker.link(String(feature.properties['categoria']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">distrito</th>\
+                        <td class="visible-with-data" id="distrito">' + (feature.properties['distrito'] !== null ? autolinker.link(String(feature.properties['distrito']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road1</th>\
+                        <td class="visible-with-data" id="road1">' + (feature.properties['road1'] !== null ? autolinker.link(String(feature.properties['road1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road2</th>\
+                        <td class="visible-with-data" id="road2">' + (feature.properties['road2'] !== null ? autolinker.link(String(feature.properties['road2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road3</th>\
+                        <td class="visible-with-data" id="road3">' + (feature.properties['road3'] !== null ? autolinker.link(String(feature.properties['road3']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road4</th>\
+                        <td class="visible-with-data" id="road4">' + (feature.properties['road4'] !== null ? autolinker.link(String(feature.properties['road4']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">estado</th>\
+                        <td class="visible-with-data" id="estado">' + (feature.properties['estado'] !== null ? autolinker.link(String(feature.properties['estado']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gestao</th>\
+                        <td class="visible-with-data" id="gestao">' + (feature.properties['gestao'] !== null ? autolinker.link(String(feature.properties['gestao']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">n_vias</th>\
+                        <td class="visible-with-data" id="n_vias">' + (feature.properties['n_vias'] !== null ? autolinker.link(String(feature.properties['n_vias']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Rede_Rodoviaria_2_0() {
+            return {
+                pane: 'pane_Rede_Rodoviaria_2',
+                opacity: 1,
+                color: 'rgba(185,246,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Rede_Rodoviaria_2');
+        map.getPane('pane_Rede_Rodoviaria_2').style.zIndex = 402;
+        map.getPane('pane_Rede_Rodoviaria_2').style['mix-blend-mode'] = 'normal';
+        var layer_Rede_Rodoviaria_2 = new L.geoJson(json_Rede_Rodoviaria_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rede_Rodoviaria_2',
+            layerName: 'layer_Rede_Rodoviaria_2',
+            pane: 'pane_Rede_Rodoviaria_2',
+            onEachFeature: pop_Rede_Rodoviaria_2,
+            style: style_Rede_Rodoviaria_2_0,
+        });
+        bounds_group.addLayer(layer_Rede_Rodoviaria_2);
+        map.addLayer(layer_Rede_Rodoviaria_2);
+        function pop_intersection_1km_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">LocExtID</th>\
+                        <td class="visible-with-data" id="LocExtID">' + (feature.properties['LocExtID'] !== null ? autolinker.link(String(feature.properties['LocExtID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td class="visible-with-data" id="Name">' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td class="visible-with-data" id="Latitude">' + (feature.properties['Latitude'] !== null ? autolinker.link(String(feature.properties['Latitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Longitude</th>\
+                        <td class="visible-with-data" id="Longitude">' + (feature.properties['Longitude'] !== null ? autolinker.link(String(feature.properties['Longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distrito</th>\
+                        <td class="visible-with-data" id="Distrito">' + (feature.properties['Distrito'] !== null ? autolinker.link(String(feature.properties['Distrito']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Concelho</th>\
+                        <td class="visible-with-data" id="Concelho">' + (feature.properties['Concelho'] !== null ? autolinker.link(String(feature.properties['Concelho']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Freguesia</th>\
+                        <td class="visible-with-data" id="Freguesia">' + (feature.properties['Freguesia'] !== null ? autolinker.link(String(feature.properties['Freguesia']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Location T</th>\
+                        <td class="visible-with-data" id="Location T">' + (feature.properties['Location T'] !== null ? autolinker.link(String(feature.properties['Location T']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Performanc</th>\
+                        <td class="visible-with-data" id="Performanc">' + (feature.properties['Performanc'] !== null ? autolinker.link(String(feature.properties['Performanc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Roadnumber</th>\
+                        <td class="visible-with-data" id="Roadnumber">' + (feature.properties['Roadnumber'] !== null ? autolinker.link(String(feature.properties['Roadnumber']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Categoria</th>\
+                        <td class="visible-with-data" id="Categoria">' + (feature.properties['Categoria'] !== null ? autolinker.link(String(feature.properties['Categoria']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_intersection_1km_3_0(feature) {
+            if (feature.properties['Performanc'] >= 0.119565 && feature.properties['Performanc'] <= 0.663043 ) {
+                return {
+                pane: 'pane_intersection_1km_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Performanc'] >= 0.663043 && feature.properties['Performanc'] <= 1.902174 ) {
+                return {
+                pane: 'pane_intersection_1km_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,191,191,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Performanc'] >= 1.902174 && feature.properties['Performanc'] <= 3.413043 ) {
+                return {
+                pane: 'pane_intersection_1km_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,128,128,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Performanc'] >= 3.413043 && feature.properties['Performanc'] <= 5.228261 ) {
+                return {
+                pane: 'pane_intersection_1km_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,64,64,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Performanc'] >= 5.228261 && feature.properties['Performanc'] <= 21.586957 ) {
+                return {
+                pane: 'pane_intersection_1km_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_intersection_1km_3');
+        map.getPane('pane_intersection_1km_3').style.zIndex = 403;
+        map.getPane('pane_intersection_1km_3').style['mix-blend-mode'] = 'normal';
+        var layer_intersection_1km_3 = new L.geoJson(json_intersection_1km_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_intersection_1km_3',
+            layerName: 'layer_intersection_1km_3',
+            pane: 'pane_intersection_1km_3',
+            onEachFeature: pop_intersection_1km_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_intersection_1km_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_intersection_1km_3);
+        map.addLayer(layer_intersection_1km_3);
+        function pop_vibe_hc_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitude'] !== null ? autolinker.link(String(feature.properties['latitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitude'] !== null ? autolinker.link(String(feature.properties['longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(String(feature.properties['name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_vibe_hc_4_0() {
+            return {
+                pane: 'pane_vibe_hc_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(5,92,49,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_vibe_hc_4');
+        map.getPane('pane_vibe_hc_4').style.zIndex = 404;
+        map.getPane('pane_vibe_hc_4').style['mix-blend-mode'] = 'normal';
+        var layer_vibe_hc_4 = new L.geoJson(json_vibe_hc_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_vibe_hc_4',
+            layerName: 'layer_vibe_hc_4',
+            pane: 'pane_vibe_hc_4',
+            onEachFeature: pop_vibe_hc_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_vibe_hc_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_vibe_hc_4);
+        map.addLayer(layer_vibe_hc_4);
+        var overlaysTree = [
+            {label: '<img src="legend/vibe_hc_4.png" /> vibe_hc', layer: layer_vibe_hc_4},
+            {label: 'intersection_1km<br /><table><tr><td style="text-align: center;"><img src="legend/intersection_1km_3_0120660.png" /></td><td>0,12 - 0,66</td></tr><tr><td style="text-align: center;"><img src="legend/intersection_1km_3_066191.png" /></td><td>0,66 - 1,9</td></tr><tr><td style="text-align: center;"><img src="legend/intersection_1km_3_193412.png" /></td><td>1,9 - 3,41</td></tr><tr><td style="text-align: center;"><img src="legend/intersection_1km_3_3415233.png" /></td><td>3,41 - 5,23</td></tr><tr><td style="text-align: center;"><img src="legend/intersection_1km_3_52321594.png" /></td><td>5,23 - 21,59</td></tr></table>', layer: layer_intersection_1km_3},
+            {label: '<img src="legend/Rede_Rodoviaria_2.png" /> Rede_Rodoviaria', layer: layer_Rede_Rodoviaria_2},
+            {label: "ESRI Boundaries&Places", layer: layer_ESRIBoundariesPlaces_1},
+            {label: "ESRI Gray (dark)", layer: layer_ESRIGraydark_0, radioGroup: 'bm' },]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: false, 
+        });
+        lay.addTo(map);
+		document.addEventListener("DOMContentLoaded", function() {
+            // set new Layers List height which considers toggle icon
+            function newLayersListHeight() {
+                var layerScrollbarElement = document.querySelector('.leaflet-control-layers-scrollbar');
+                if (layerScrollbarElement) {
+                    var layersListElement = document.querySelector('.leaflet-control-layers-list');
+                    var originalHeight = layersListElement.style.height 
+                        || window.getComputedStyle(layersListElement).height;
+                    var newHeight = parseFloat(originalHeight) - 50;
+                    layersListElement.style.height = newHeight + 'px';
+                }
+            }
+            var isLayersListExpanded = true;
+            var controlLayersElement = document.querySelector('.leaflet-control-layers');
+            var toggleLayerControl = document.querySelector('.leaflet-control-layers-toggle');
+            // toggle Collapsed/Expanded and apply new Layers List height
+            toggleLayerControl.addEventListener('click', function() {
+                if (isLayersListExpanded) {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                } else {
+                    controlLayersElement.classList.add('leaflet-control-layers-expanded');
+                }
+                isLayersListExpanded = !isLayersListExpanded;
+                newLayersListHeight()
+            });	
+			// apply new Layers List height if toggle layerstree
+			if (controlLayersElement) {
+				controlLayersElement.addEventListener('click', function(event) {
+					var toggleLayerHeaderPointer = event.target.closest('.leaflet-layerstree-header-pointer span');
+					if (toggleLayerHeaderPointer) {
+						newLayersListHeight();
+					}
+				});
+			}
+            // Collapsed/Expanded at Start to apply new height
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            // Collapsed touch/small screen
+            var isSmallScreen = window.innerWidth < 650;
+            if (isSmallScreen) {
+                setTimeout(function() {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                    isLayersListExpanded = !isLayersListExpanded;
+                }, 500);
+            }  
+        });       
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_intersection_1km_3,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'LocExtID'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        </script>
+    </body>
+</html>
