@@ -38,13 +38,14 @@
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="data/Rede_Rodoviaria_2.js"></script>
-        <script src="data/DL000941_3.js"></script>
-        <script src="data/PWDTlocationswithin1kmofEN1_4.js"></script>
-        <script src="data/VibeHC_5.js"></script>
+        <script src="data/Competitionwithin1kmofEN1_3.js"></script>
+        <script src="data/DL000941_4.js"></script>
+        <script src="data/PWDTlocationswithin1kmofEN1_5.js"></script>
+        <script src="data/VibeHC_6.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[37.51808168153571,-12.342421033052513],[41.677081883207954,-3.1731113809392237]]);
+        }).fitBounds([[38.49983098229872,-11.573382476917425],[41.540738105241516,-6.930497924511342]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -195,51 +196,75 @@
         });
         bounds_group.addLayer(layer_Rede_Rodoviaria_2);
         map.addLayer(layer_Rede_Rodoviaria_2);
-        function pop_DL000941_3(feature, layer) {
+        function pop_Competitionwithin1kmofEN1_3(feature, layer) {
             var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">LocExtID</th>\
-                        <td class="visible-with-data" id="LocExtID">' + (feature.properties['LocExtID'] !== null ? autolinker.link(String(feature.properties['LocExtID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
                     <tr>\
                         <th scope="row">Name</th>\
                         <td class="visible-with-data" id="Name">' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td class="visible-with-data" id="Latitude">' + (feature.properties['Latitude'] !== null ? autolinker.link(String(feature.properties['Latitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Operator</th>\
+                        <td class="visible-with-data" id="Operator">' + (feature.properties['Operator'] !== null ? autolinker.link(String(feature.properties['Operator']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td class="visible-with-data" id="Longitude">' + (feature.properties['Longitude'] !== null ? autolinker.link(String(feature.properties['Longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Suboperato</th>\
+                        <td class="visible-with-data" id="Suboperato">' + (feature.properties['Suboperato'] !== null ? autolinker.link(String(feature.properties['Suboperato']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Distrito</th>\
-                        <td class="visible-with-data" id="Distrito">' + (feature.properties['Distrito'] !== null ? autolinker.link(String(feature.properties['Distrito']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Owner</th>\
+                        <td class="visible-with-data" id="Owner">' + (feature.properties['Owner'] !== null ? autolinker.link(String(feature.properties['Owner']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Concelho</th>\
-                        <td class="visible-with-data" id="Concelho">' + (feature.properties['Concelho'] !== null ? autolinker.link(String(feature.properties['Concelho']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Street</th>\
+                        <td class="visible-with-data" id="Street">' + (feature.properties['Street'] !== null ? autolinker.link(String(feature.properties['Street']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Freguesia</th>\
-                        <td class="visible-with-data" id="Freguesia">' + (feature.properties['Freguesia'] !== null ? autolinker.link(String(feature.properties['Freguesia']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">PostalCode</th>\
+                        <td class="visible-with-data" id="PostalCode">' + (feature.properties['PostalCode'] !== null ? autolinker.link(String(feature.properties['PostalCode']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Location T</th>\
-                        <td class="visible-with-data" id="Location T">' + (feature.properties['Location T'] !== null ? autolinker.link(String(feature.properties['Location T']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">City</th>\
+                        <td class="visible-with-data" id="City">' + (feature.properties['City'] !== null ? autolinker.link(String(feature.properties['City']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Performanc</th>\
-                        <td class="visible-with-data" id="Performanc">' + (feature.properties['Performanc'] !== null ? autolinker.link(String(feature.properties['Performanc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Municipali</th>\
+                        <td class="visible-with-data" id="Municipali">' + (feature.properties['Municipali'] !== null ? autolinker.link(String(feature.properties['Municipali']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Roadnumber</th>\
-                        <td class="visible-with-data" id="Roadnumber">' + (feature.properties['Roadnumber'] !== null ? autolinker.link(String(feature.properties['Roadnumber']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Province</th>\
+                        <td class="visible-with-data" id="Province">' + (feature.properties['Province'] !== null ? autolinker.link(String(feature.properties['Province']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Categoria</th>\
-                        <td class="visible-with-data" id="Categoria">' + (feature.properties['Categoria'] !== null ? autolinker.link(String(feature.properties['Categoria']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">Lat</th>\
+                        <td class="visible-with-data" id="Lat">' + (feature.properties['Lat'] !== null ? autolinker.link(String(feature.properties['Lat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Long</th>\
+                        <td class="visible-with-data" id="Long">' + (feature.properties['Long'] !== null ? autolinker.link(String(feature.properties['Long']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Power(W)</th>\
+                        <td class="visible-with-data" id="Power(W)">' + (feature.properties['Power(W)'] !== null ? autolinker.link(String(feature.properties['Power(W)']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Voltage</th>\
+                        <td class="visible-with-data" id="Voltage">' + (feature.properties['Voltage'] !== null ? autolinker.link(String(feature.properties['Voltage']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">roadnumber</th>\
+                        <td class="visible-with-data" id="roadnumber">' + (feature.properties['roadnumber'] !== null ? autolinker.link(String(feature.properties['roadnumber']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">categoria</th>\
+                        <td class="visible-with-data" id="categoria">' + (feature.properties['categoria'] !== null ? autolinker.link(String(feature.properties['categoria']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road1</th>\
+                        <td class="visible-with-data" id="road1">' + (feature.properties['road1'] !== null ? autolinker.link(String(feature.properties['road1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road2</th>\
+                        <td class="visible-with-data" id="road2">' + (feature.properties['road2'] !== null ? autolinker.link(String(feature.properties['road2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -249,9 +274,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_DL000941_3_0() {
+        function style_Competitionwithin1kmofEN1_3_0() {
             return {
-                pane: 'pane_DL000941_3',
+                pane: 'pane_Competitionwithin1kmofEN1_3',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -261,31 +286,31 @@
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,26,26,1.0)',
+                fillColor: 'rgba(135,230,156,1.0)',
                 interactive: true,
             }
         }
-        map.createPane('pane_DL000941_3');
-        map.getPane('pane_DL000941_3').style.zIndex = 403;
-        map.getPane('pane_DL000941_3').style['mix-blend-mode'] = 'normal';
-        var layer_DL000941_3 = new L.geoJson(json_DL000941_3, {
+        map.createPane('pane_Competitionwithin1kmofEN1_3');
+        map.getPane('pane_Competitionwithin1kmofEN1_3').style.zIndex = 403;
+        map.getPane('pane_Competitionwithin1kmofEN1_3').style['mix-blend-mode'] = 'normal';
+        var layer_Competitionwithin1kmofEN1_3 = new L.geoJson(json_Competitionwithin1kmofEN1_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_DL000941_3',
-            layerName: 'layer_DL000941_3',
-            pane: 'pane_DL000941_3',
-            onEachFeature: pop_DL000941_3,
+            dataVar: 'json_Competitionwithin1kmofEN1_3',
+            layerName: 'layer_Competitionwithin1kmofEN1_3',
+            pane: 'pane_Competitionwithin1kmofEN1_3',
+            onEachFeature: pop_Competitionwithin1kmofEN1_3,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_DL000941_3_0(feature));
+                return L.circleMarker(latlng, style_Competitionwithin1kmofEN1_3_0(feature));
             },
         });
-        bounds_group.addLayer(layer_DL000941_3);
-        map.addLayer(layer_DL000941_3);
-        function pop_PWDTlocationswithin1kmofEN1_4(feature, layer) {
+        bounds_group.addLayer(layer_Competitionwithin1kmofEN1_3);
+        map.addLayer(layer_Competitionwithin1kmofEN1_3);
+        function pop_DL000941_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">LocExtID</th>\
@@ -339,10 +364,100 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_PWDTlocationswithin1kmofEN1_4_0(feature) {
+        function style_DL000941_4_0() {
+            return {
+                pane: 'pane_DL000941_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,26,26,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_DL000941_4');
+        map.getPane('pane_DL000941_4').style.zIndex = 404;
+        map.getPane('pane_DL000941_4').style['mix-blend-mode'] = 'normal';
+        var layer_DL000941_4 = new L.geoJson(json_DL000941_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DL000941_4',
+            layerName: 'layer_DL000941_4',
+            pane: 'pane_DL000941_4',
+            onEachFeature: pop_DL000941_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_DL000941_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_DL000941_4);
+        map.addLayer(layer_DL000941_4);
+        function pop_PWDTlocationswithin1kmofEN1_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">LocExtID</th>\
+                        <td class="visible-with-data" id="LocExtID">' + (feature.properties['LocExtID'] !== null ? autolinker.link(String(feature.properties['LocExtID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td class="visible-with-data" id="Name">' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td class="visible-with-data" id="Latitude">' + (feature.properties['Latitude'] !== null ? autolinker.link(String(feature.properties['Latitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Longitude</th>\
+                        <td class="visible-with-data" id="Longitude">' + (feature.properties['Longitude'] !== null ? autolinker.link(String(feature.properties['Longitude']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Admin_Dist</th>\
+                        <td class="visible-with-data" id="Admin_Dist">' + (feature.properties['Admin_Dist'] !== null ? autolinker.link(String(feature.properties['Admin_Dist']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Admin_Conc</th>\
+                        <td class="visible-with-data" id="Admin_Conc">' + (feature.properties['Admin_Conc'] !== null ? autolinker.link(String(feature.properties['Admin_Conc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Admin_Freg</th>\
+                        <td class="visible-with-data" id="Admin_Freg">' + (feature.properties['Admin_Freg'] !== null ? autolinker.link(String(feature.properties['Admin_Freg']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LocType</th>\
+                        <td class="visible-with-data" id="LocType">' + (feature.properties['LocType'] !== null ? autolinker.link(String(feature.properties['LocType']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Performanc</th>\
+                        <td class="visible-with-data" id="Performanc">' + (feature.properties['Performanc'] !== null ? autolinker.link(String(feature.properties['Performanc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Roadnumber</th>\
+                        <td class="visible-with-data" id="Roadnumber">' + (feature.properties['Roadnumber'] !== null ? autolinker.link(String(feature.properties['Roadnumber']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Categoria</th>\
+                        <td class="visible-with-data" id="Categoria">' + (feature.properties['Categoria'] !== null ? autolinker.link(String(feature.properties['Categoria']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PWDTlocationswithin1kmofEN1_5_0(feature) {
             if (feature.properties['Performanc'] >= 0.119565 && feature.properties['Performanc'] <= 0.663043 ) {
                 return {
-                pane: 'pane_PWDTlocationswithin1kmofEN1_4',
+                pane: 'pane_PWDTlocationswithin1kmofEN1_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -358,7 +473,7 @@
             }
             if (feature.properties['Performanc'] >= 0.663043 && feature.properties['Performanc'] <= 1.902174 ) {
                 return {
-                pane: 'pane_PWDTlocationswithin1kmofEN1_4',
+                pane: 'pane_PWDTlocationswithin1kmofEN1_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -374,7 +489,7 @@
             }
             if (feature.properties['Performanc'] >= 1.902174 && feature.properties['Performanc'] <= 3.413043 ) {
                 return {
-                pane: 'pane_PWDTlocationswithin1kmofEN1_4',
+                pane: 'pane_PWDTlocationswithin1kmofEN1_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -390,7 +505,7 @@
             }
             if (feature.properties['Performanc'] >= 3.413043 && feature.properties['Performanc'] <= 5.228261 ) {
                 return {
-                pane: 'pane_PWDTlocationswithin1kmofEN1_4',
+                pane: 'pane_PWDTlocationswithin1kmofEN1_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -406,7 +521,7 @@
             }
             if (feature.properties['Performanc'] >= 5.228261 && feature.properties['Performanc'] <= 21.586957 ) {
                 return {
-                pane: 'pane_PWDTlocationswithin1kmofEN1_4',
+                pane: 'pane_PWDTlocationswithin1kmofEN1_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -421,27 +536,27 @@
             }
             }
         }
-        map.createPane('pane_PWDTlocationswithin1kmofEN1_4');
-        map.getPane('pane_PWDTlocationswithin1kmofEN1_4').style.zIndex = 404;
-        map.getPane('pane_PWDTlocationswithin1kmofEN1_4').style['mix-blend-mode'] = 'normal';
-        var layer_PWDTlocationswithin1kmofEN1_4 = new L.geoJson(json_PWDTlocationswithin1kmofEN1_4, {
+        map.createPane('pane_PWDTlocationswithin1kmofEN1_5');
+        map.getPane('pane_PWDTlocationswithin1kmofEN1_5').style.zIndex = 405;
+        map.getPane('pane_PWDTlocationswithin1kmofEN1_5').style['mix-blend-mode'] = 'normal';
+        var layer_PWDTlocationswithin1kmofEN1_5 = new L.geoJson(json_PWDTlocationswithin1kmofEN1_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_PWDTlocationswithin1kmofEN1_4',
-            layerName: 'layer_PWDTlocationswithin1kmofEN1_4',
-            pane: 'pane_PWDTlocationswithin1kmofEN1_4',
-            onEachFeature: pop_PWDTlocationswithin1kmofEN1_4,
+            dataVar: 'json_PWDTlocationswithin1kmofEN1_5',
+            layerName: 'layer_PWDTlocationswithin1kmofEN1_5',
+            pane: 'pane_PWDTlocationswithin1kmofEN1_5',
+            onEachFeature: pop_PWDTlocationswithin1kmofEN1_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_PWDTlocationswithin1kmofEN1_4_0(feature));
+                return L.circleMarker(latlng, style_PWDTlocationswithin1kmofEN1_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_PWDTlocationswithin1kmofEN1_4);
-        map.addLayer(layer_PWDTlocationswithin1kmofEN1_4);
-        function pop_VibeHC_5(feature, layer) {
+        bounds_group.addLayer(layer_PWDTlocationswithin1kmofEN1_5);
+        map.addLayer(layer_PWDTlocationswithin1kmofEN1_5);
+        function pop_VibeHC_6(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">latitude</th>\
@@ -463,9 +578,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_VibeHC_5_0() {
+        function style_VibeHC_6_0() {
             return {
-                pane: 'pane_VibeHC_5',
+                pane: 'pane_VibeHC_6',
                 radius: 6.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -479,30 +594,31 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_VibeHC_5');
-        map.getPane('pane_VibeHC_5').style.zIndex = 405;
-        map.getPane('pane_VibeHC_5').style['mix-blend-mode'] = 'normal';
-        var layer_VibeHC_5 = new L.geoJson(json_VibeHC_5, {
+        map.createPane('pane_VibeHC_6');
+        map.getPane('pane_VibeHC_6').style.zIndex = 406;
+        map.getPane('pane_VibeHC_6').style['mix-blend-mode'] = 'normal';
+        var layer_VibeHC_6 = new L.geoJson(json_VibeHC_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_VibeHC_5',
-            layerName: 'layer_VibeHC_5',
-            pane: 'pane_VibeHC_5',
-            onEachFeature: pop_VibeHC_5,
+            dataVar: 'json_VibeHC_6',
+            layerName: 'layer_VibeHC_6',
+            pane: 'pane_VibeHC_6',
+            onEachFeature: pop_VibeHC_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_VibeHC_5_0(feature));
+                return L.circleMarker(latlng, style_VibeHC_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_VibeHC_5);
-        map.addLayer(layer_VibeHC_5);
+        bounds_group.addLayer(layer_VibeHC_6);
+        map.addLayer(layer_VibeHC_6);
         var overlaysTree = [
-            {label: '<img src="legend/VibeHC_5.png" /> Vibe HC', layer: layer_VibeHC_5},
-            {label: 'PWDT locations within 1km of EN1<br /><table><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_4_0120660.png" /></td><td>0,12 - 0,66</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_4_066191.png" /></td><td>0,66 - 1,9</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_4_193412.png" /></td><td>1,9 - 3,41</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_4_3415233.png" /></td><td>3,41 - 5,23</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_4_52321594.png" /></td><td>5,23 - 21,59</td></tr></table>', layer: layer_PWDTlocationswithin1kmofEN1_4},
-            {label: '<img src="legend/DL000941_3.png" /> DL000941', layer: layer_DL000941_3},
+            {label: '<img src="legend/VibeHC_6.png" /> Vibe HC', layer: layer_VibeHC_6},
+            {label: 'PWDT locations within 1km of EN1<br /><table><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_5_0120660.png" /></td><td>0,12 - 0,66</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_5_066191.png" /></td><td>0,66 - 1,9</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_5_193412.png" /></td><td>1,9 - 3,41</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_5_3415233.png" /></td><td>3,41 - 5,23</td></tr><tr><td style="text-align: center;"><img src="legend/PWDTlocationswithin1kmofEN1_5_52321594.png" /></td><td>5,23 - 21,59</td></tr></table>', layer: layer_PWDTlocationswithin1kmofEN1_5},
+            {label: '<img src="legend/DL000941_4.png" /> DL000941', layer: layer_DL000941_4},
+            {label: '<img src="legend/Competitionwithin1kmofEN1_3.png" /> Competition within 1km of EN1', layer: layer_Competitionwithin1kmofEN1_3},
             {label: '<img src="legend/Rede_Rodoviaria_2.png" /> Rede_Rodoviaria', layer: layer_Rede_Rodoviaria_2},
             {label: "ESRI Boundaries&Places", layer: layer_ESRIBoundariesPlaces_1},
             {label: "ESRI Gray (dark)", layer: layer_ESRIGraydark_0, radioGroup: 'bm' },]
@@ -518,7 +634,7 @@
         lay.addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_PWDTlocationswithin1kmofEN1_4,
+            layer: layer_PWDTlocationswithin1kmofEN1_5,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'LocExtID'}));
